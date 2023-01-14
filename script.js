@@ -32,8 +32,10 @@ async function start(_cards, _totI, _los, _startSel, _endSel){
     }
     totIterations = _totI  //preferably 10k or 100k
     los = _los
+    if (parseInt(_startSel) > parseInt(_endSel))
+        _endSel = _startSel
 
-    for(selectors = _startSel; selectors <= _endSel; selectors++){
+    for (selectors = parseInt(_startSel); selectors <= parseInt(_endSel); selectors++) {
         initialize()
         for (let i = 0; i < totIterations; i++)
             await main()
