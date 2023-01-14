@@ -2,6 +2,8 @@ html {
     font-family: 'Montserrat', Arial, sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
+    background-color: #212121;
+    color: #c7c7c7;
 }
 
 input {
@@ -17,21 +19,22 @@ div {
 }
 
 input[type='text'], input[type='number'] {
+    color: #c7c7c7;
     position:absolute;
     left:120px;
     background: none;
     border: none;
-    border-bottom: solid 2px #474544;
-    border-left: solid 2px #474544;
+    border-bottom: solid 2px #c7c7c7;
+    border-left: solid 2px #c7c7c7;
     font-size: 1.000em;
     font-weight: 400;
     letter-spacing: 1px;
 }
 
 input[type='button'] {
+    color: #c7c7c7;
     background: none;
-    border: solid 2px #474544;
-    color: #474544;
+    border: solid 2px #c7c7c7;
     cursor: pointer;
     display: inline-block;
     font-family: 'Helvetica', Arial, sans-serif;
@@ -49,9 +52,5 @@ input[type='button'] {
 
 input[type='button']:hover {
     background: #474544;
-    color: #F2F3EB;
-}
-
-body {
-    background: #F2F3EB;
+    color: #c7c7c7;
 }
