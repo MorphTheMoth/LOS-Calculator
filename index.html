@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" href="css.css">
+    <title>LOS Calculator</title>
+    <link rel="shortcut icon" type="image/png" href="https://stickerly.pstatic.net/sticker_pack/GOd1tDB6ydSvmdOF2zw7w/NDCQJ7/12/b5dccd8f-edf9-4bcd-8805-496d28deda11.png">
+</head>
+<body>
+    <form id="form" class="">
+
+        <br>
+        <div>Kadan <input value="0+0" type="text" name="kadan"><br></div>
+        <div>Nineveh <input value="0+0" type="text" name="nineveh"><br></div>
+        <div>Shandi <input value="0+0" type="text" name="shandi"><br></div>
+        <div>Azena <input value="0+0" type="text" name="azena"><br></div>
+        <div>Thirain <input value="0+0" type="text" name="thirain"><br></div>
+        <div>Balthorr <input value="0+0" type="text" name="balthorr"><br></div>
+        <div>Wei <input value="5+0" type="text" name="wei"><br></div>
+
+        <br>
+        <div>Selectors <input value="10" type="text" name="startSel"><br></div>
+        <div>Max selectors <input value="10" type="text" name="endSel"><br></div>
+
+        <br>
+        <div>Iterations <input value="5000" type="text" name="totI"><br></div>
+
+        <br>
+        <div>LOS to reach <input value="30" type="text" name="los"><br></div>
+
+        <br>
+        <input type="button" value="Start" onClick="getDataAndStart(this.form)">
+        <input type="button" value="Clear" onClick="clearLogs()">
+
+    </form>
+    <br>
+    <p id="logs"></p>
+
+</body>
+</html>

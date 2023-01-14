@@ -1,0 +1,57 @@
+html {
+    font-family: 'Montserrat', Arial, sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+input {
+    line-height: normal;
+}
+
+input[type='text']:focus, input[type='number']:focus {
+	outline: none;
+}
+
+div {
+    height: 25px;
+}
+
+input[type='text'], input[type='number'] {
+    position:absolute;
+    left:120px;
+    background: none;
+    border: none;
+    border-bottom: solid 2px #474544;
+    border-left: solid 2px #474544;
+    font-size: 1.000em;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+input[type='button'] {
+    background: none;
+    border: solid 2px #474544;
+    color: #474544;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 0.875em;
+    font-weight: bold;
+    outline: none;
+    padding: 20px 35px;
+    text-transform: uppercase;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+input[type='button']:hover {
+    background: #474544;
+    color: #F2F3EB;
+}
+
+body {
+    background: #F2F3EB;
+}
