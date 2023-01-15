@@ -2,7 +2,7 @@ html {
     font-family: 'Montserrat', Arial, sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
-    background-color: #212121;
+    background-color: #161718;
     color: #c7c7c7;
 }
 
@@ -24,8 +24,8 @@ input[type='text'], input[type='number'] {
     left:120px;
     background: none;
     border: none;
-    border-bottom: solid 2px #c7c7c7;
-    border-left: solid 2px #c7c7c7;
+    border-bottom: solid 2px #3A3E41;
+    border-left: solid 2px #3A3E41;
     font-size: 1.000em;
     font-weight: 400;
     letter-spacing: 1px;
@@ -34,7 +34,7 @@ input[type='text'], input[type='number'] {
 input[type='button'] {
     color: #c7c7c7;
     background: none;
-    border: solid 2px #c7c7c7;
+    border: solid 2px #3A3E41;
     cursor: pointer;
     display: inline-block;
     font-family: 'Helvetica', Arial, sans-serif;
