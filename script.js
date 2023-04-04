@@ -8,7 +8,17 @@ var lowest
 
 var totIterations
 var los
+var abyssRuns
 var selectors
+
+/* --abyssal dungeons--
+nord vern | shandi, thirain, beatrice, king thirian, kharmine, armen, delain armen, zinnervale
+rohendel  | + azena
+yorn      | + balthor
+feiton    | + nineveh
+punika    | + dead kakul 
+*/
+// shandi, thirain, azena, balthor, nineveh
 
 function awakeningsToCardNumber(s){
     let n = s.charCodeAt(0) - 48
@@ -16,17 +26,18 @@ function awakeningsToCardNumber(s){
 }
 
 function getDataAndStart(form){
-    cards = [form.kadan.value, form.shandi.value, form.balthorr.value, form.thirain.value, form.azena.value, form.nineveh.value, form.wei.value]
+    cards = [form.kadan.value, form.shandi.value, form.thirain.value, form.azena.value, form.balthorr.value, form.nineveh.value, form.wei.value]
     for (let i = 0; i < cards.length; i++)
         cards[i] = awakeningsToCardNumber(cards[i])
 
     //console.log(cards)
     console.log(cards, form.totI.value, form.los.value, form.startSel.value, form.endSel.value)
-    start(cards, form.totI.value, form.los.value, form.startSel.value, form.endSel.value)
+    clearLogs()
+    start(cards, form.totI.value, form.los.value, form.startSel.value, form.endSel.value, form.abyssRuns.value)
 }
 
-async function start(_cards, _totI, _los, _startSel, _endSel){
-    initialCards = []  //[7,7,7,4,4,4,16]
+async function start(_cards, _totI, _los, _startSel, _endSel, _abyssRuns){
+    initialCards = []
     for (var i = 0; i < _cards.length; i++) {
         initialCards[i] = _cards[i]
     }
@@ -34,6 +45,8 @@ async function start(_cards, _totI, _los, _startSel, _endSel){
     los = _los
     if (parseInt(_startSel) > parseInt(_endSel))
         _endSel = _startSel
+    abyssRuns = (_abyssRuns == "true")
+    mariShop = (_abyssRuns == "false")
 
     for (selectors = parseInt(_startSel); selectors <= parseInt(_endSel); selectors++) {
         initialize()
@@ -71,20 +84,42 @@ function clearLogs(){
     document.getElementById("logs").innerHTML = ''
 }
 
-async function main(){
-    tot = 0 //tot opened leg packs
-    for (let i = 0; i < 7; i++)
+function addToCards(card){
+    cards[card]++
+    if (cards[card] > 16)
+        cards[card] = 16
+}
+
+function abyssRun(nLos, nTrash, times){
+    for (let i = 0; i < times; i++) {
+        if (random(0, 19) != 0) //4% speculated odds of card drop, probably copium
+            continue
+        let r = random(1, nLos + nTrash)
+        if (r <= nLos)
+            addToCards(r)  //+1 because kadan is '0', the rest is in the same order as abyssals appearence
+    }
+}
+
+async function main() {
+    let tot = 0 //tot opened leg packs
+    for (let i = 0; i <= 6; i++)
         cards[i] = initialCards[i]
 
     do{
         tot++
-
-        let r = random(0, 18)
-        if(r>6)
-            continue
-        cards[r]++
-        if(cards[r] > 16)
-            cards[r] = 16
+        if (abyssRuns) {
+            abyssRun(2, 6, 2) //north vern
+            abyssRun(3, 6, 2) //rohendel
+            abyssRun(4, 6, 2) //yorn
+            abyssRun(5, 6, 3) //feiton
+            abyssRun(5, 7, 2) //punika
+            abyssRun(5, 7, 3) //argos, surely same odds right
+        } else if (mariShop) {
+            let r = random(0, 18)
+            if (r > 6)
+                continue
+            addToCards(r)
+        }
 
     }while(!losCheck())
 
@@ -115,12 +150,12 @@ function losCheck(){
     for (let i = 0; i < 7; i++)
         if(i != lowestLosCard())
             totAwk += awakenings(cards[i])
-    //console.log(totAwk);
+    //console.log(totAwk)
     return totAwk + useSelectors() >= los
 }
 
 function random(min,max){
-    return Math.floor(Math.random()*(max-min+1)+min);
+    return Math.floor(Math.random()*(max-min+1)+min)
 }
 
 //console.log(odds)
@@ -140,7 +175,7 @@ function lowestLosCard(){
 function useSelectors(){
     let tSel = selectors
     let awk = 0
-    let lowAwk = 1 //start at 1 because it assumes kadan is 0
+    let lowAwk = 1 //starts at 1 because it assumes kadan is 0
     let tcards = []
     let change
     for (let i = 0; i < cards.length; i++)
