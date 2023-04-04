@@ -1,24 +1,22 @@
 var cards = []
 var odds = []
 var initialCards
-var tot
-var average
-var highest
-var lowest
+var tot, average, highest, lowest
 
 var totIterations
 var los
 var abyssRuns
 var selectors
 
+var nVern, nRohe, nYorn, nFeiton, nPunika, nArgos
 /* --abyssal dungeons--
 nord vern | shandi, thirain, beatrice, king thirian, kharmine, armen, delain armen, zinnervale
 rohendel  | + azena
-yorn      | + balthor
+yorn      | + balthorr
 feiton    | + nineveh
 punika    | + dead kakul 
 */
-// shandi, thirain, azena, balthor, nineveh
+// kadan, shandi, thirain, azena, balthorr, nineveh, wei
 
 function awakeningsToCardNumber(s){
     let n = s.charCodeAt(0) - 48
@@ -31,96 +29,52 @@ function getDataAndStart(form){
         cards[i] = awakeningsToCardNumber(cards[i])
 
     //console.log(cards)
-    console.log(cards, form.totI.value, form.los.value, form.startSel.value, form.endSel.value)
+    //console.log(cards, form.totI.value, form.los.value, form.startSel.value, form.endSel.value)
     clearLogs()
-    start(cards, form.totI.value, form.los.value, form.startSel.value, form.endSel.value, form.abyssRuns.value)
+    start(cards, form.totI.value, form.los.value, form.startSel.value, form.endSel.value, form.abyssRuns.value,
+        form.vern.value, form.rohendel.value, form.yorn.value, form.feiton.value, form.punika.value, form.argos.value)
 }
 
-async function start(_cards, _totI, _los, _startSel, _endSel, _abyssRuns){
+function start(_cards, _totI, _los, _startSel, _endSel, _abyssRuns, _vern, _rohendel, _yorn, _feiton, _punika, _argos){
     initialCards = []
-    for (var i = 0; i < _cards.length; i++) {
+    for (var i = 0; i < _cards.length; i++) 
         initialCards[i] = _cards[i]
-    }
+    
     totIterations = _totI  //preferably 10k or 100k
     los = _los
     if (parseInt(_startSel) > parseInt(_endSel))
         _endSel = _startSel
     abyssRuns = (_abyssRuns == "true")
     mariShop = (_abyssRuns == "false")
+    nVern = _vern; nRohe = _rohendel; nYorn = _yorn; nFeiton = _feiton; nPunika = _punika; nArgos = _argos;
 
     for (selectors = parseInt(_startSel); selectors <= parseInt(_endSel); selectors++) {
         initialize()
         for (let i = 0; i < totIterations; i++)
-            await main()
+            main()
         output()
     }
 }
 
-function initialize(){
-    average = 0
-    highest = 0
-    lowest = 10000
-}
-
-function output(){
-    let s = ''
-    s += '<br>Selectors: ' + selectors
-    s += '<br>Average: ' + (average / totIterations)
-    s += '<br>Lowest: ' + lowest
-    s += '<br>Highest: ' + highest
-    s += '<br><br>'
-
-    for (let i = 0; i < odds.length; i++) {
-        if(!odds[i])
-            continue
-        //console.log(i, '\t', decimals(odds[i]/totIterations*100,4, " %"))
-        //console.log(i, '\t', odds[i])
-    }
-
-    document.getElementById("logs").innerHTML += s
-}
-
-function clearLogs(){
-    document.getElementById("logs").innerHTML = ''
-}
-
-function addToCards(card){
-    cards[card]++
-    if (cards[card] > 16)
-        cards[card] = 16
-}
-
-function abyssRun(nLos, nTrash, times){
-    for (let i = 0; i < times; i++) {
-        if (random(0, 19) != 0) //4% speculated odds of card drop, probably copium
-            continue
-        let r = random(1, nLos + nTrash)
-        if (r <= nLos)
-            addToCards(r)  //+1 because kadan is '0', the rest is in the same order as abyssals appearence
-    }
-}
-
-async function main() {
+function main() {
     let tot = 0 //tot opened leg packs
     for (let i = 0; i <= 6; i++)
         cards[i] = initialCards[i]
-
     do{
         tot++
         if (abyssRuns) {
-            abyssRun(2, 6, 2) //north vern
-            abyssRun(3, 6, 2) //rohendel
-            abyssRun(4, 6, 2) //yorn
-            abyssRun(5, 6, 3) //feiton
-            abyssRun(5, 7, 2) //punika
-            abyssRun(5, 7, 3) //argos, surely same odds right
+            abyssRun(2, 6, 2*nVern) //north vern
+            abyssRun(3, 6, 2*nRohe) //rohendel
+            abyssRun(4, 6, 2*nYorn) //yorn
+            abyssRun(5, 6, 3*nFeiton) //feiton
+            abyssRun(5, 7, 2*nPunika) //punika
+            abyssRun(5, 7, 3*nArgos) //argos, surely same odds right
         } else if (mariShop) {
             let r = random(0, 18)
             if (r > 6)
                 continue
             addToCards(r)
         }
-
     }while(!losCheck())
 
     if(tot>highest)
@@ -133,6 +87,54 @@ async function main() {
     odds[tot]++
 
     average += tot
+}
+
+function initialize() {
+    average = 0
+    highest = 0
+    lowest = 10000
+}
+
+function output() {
+    let s = ''
+    if (abyssRuns) {
+        s += '<br>--WEEKS OF CARD RUNS--'
+    } else if (mariShop) {
+        s += '<br>--LEG PACKS--'
+    }
+    s += '<br>Average: ' + (average / totIterations)
+    s += '<br>Lowest: ' + lowest
+    s += '<br>Highest: ' + highest
+    s += '<br>Selectors: ' + selectors
+    s += '<br><br>'
+
+    for (let i = 0; i < odds.length; i++) {
+        if (!odds[i])
+            continue
+        //console.log(i, '\t', decimals(odds[i]/totIterations*100,4, " %"))
+        //console.log(i, '\t', odds[i])
+    }
+    document.getElementById("logs").innerHTML += s
+}
+
+function clearLogs() {
+    document.getElementById("logs").innerHTML = ''
+}
+
+function addToCards(card) {
+    cards[card]++
+    if (cards[card] > 16)
+        cards[card] = 16
+}
+
+function abyssRun(nLos, nTrash, times) {
+    for (let i = 0; i < times; i++) {
+        if (random(0, 19) != 0) //4% speculated odds of card drop, probably copium
+            continue
+        let r = random(1, nLos + nTrash)
+        if (r <= nLos)
+            addToCards(r)  //+1 because kadan is '0', the rest is in the same order as abyssals appearence
+    }
 }
 
 function awakenings(card){
@@ -208,4 +210,11 @@ function nextAwk(card){
         awakens++
     }
     return awakens - card + 2
+}
+
+function cardRunOptionsShowHide(){
+    if (document.getElementById("cardRunOptions").style.display == "none" )
+        document.getElementById("cardRunOptions").style.display = "block"
+    else
+        document.getElementById("cardRunOptions").style.display = "none"
 }

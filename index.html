@@ -11,13 +11,13 @@
     <form id="form" class="">
 
         <br>
-        <div>Kadan <input value="0+0" type="text" name="kadan"><br></div>
-        <div>Nineveh <input value="0+0" type="text" name="nineveh"><br></div>
-        <div>Shandi <input value="0+0" type="text" name="shandi"><br></div>
-        <div>Azena <input value="0+0" type="text" name="azena"><br></div>
-        <div>Thirain <input value="0+0" type="text" name="thirain"><br></div>
+        <div>Kadan    <input value="0+0" type="text" name="kadan"><br></div>
+        <div>Nineveh  <input value="0+0" type="text" name="nineveh"><br></div>
+        <div>Shandi   <input value="0+0" type="text" name="shandi"><br></div>
+        <div>Azena    <input value="0+0" type="text" name="azena"><br></div>
+        <div>Thirain  <input value="0+0" type="text" name="thirain"><br></div>
         <div>Balthorr <input value="0+0" type="text" name="balthorr"><br></div>
-        <div>Wei <input value="5+0" type="text" name="wei"><br></div>
+        <div>Wei      <input value="5+0" type="text" name="wei"><br></div>
 
         <br>
         <div>Selectors <input value="10" type="text" name="startSel"><br></div>
@@ -28,14 +28,26 @@
 
         <br>
         <div>LOS to reach <input value="30" type="text" name="los"><br></div>
+        
+        <br>
+        Leg packs <input type="radio" name="abyssRuns" value="false"> <br>
+        Card runs <input type="radio" name="abyssRuns" value="true" checked="checked"> <br>
 
         <br>
-        Card runs <input type="radio" name="abyssRuns" value="true" checked="checked"> <br>
-        Mari shop <input type="radio" name="abyssRuns" value="false"> <br>
+        <u onclick="cardRunOptionsShowHide()" class="click">Weekly card runs options</u>
+        <br><br>
+        <div style="display:none; height:auto;" id="cardRunOptions">
+            <div>North Vern <input value="1" type="text" name="vern"><br></div>
+            <div>Rohendel   <input value="1" type="text" name="rohendel"><br></div>
+            <div>Yorn       <input value="1" type="text" name="yorn"><br></div>
+            <div>Feiton     <input value="1" type="text" name="feiton"><br></div>
+            <div>Punika     <input value="1" type="text" name="punika"><br></div>
+            <div>Argos      <input value="1" type="text" name="argos"><br></div>
+        </div>
 
         <br>
         <input type="button" value="Start" onClick="getDataAndStart(this.form)">
-        <input type="button" value="Clear" onClick="clearLogs()">
+        <!-- <input type="button" value="Clear" onClick="clearLogs()"> -->
         <input type="button" value="Instructions" onClick="window.open('losCalculatorInstructions.png','_blank')">
 
     </form>
